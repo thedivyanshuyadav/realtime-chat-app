@@ -111,6 +111,7 @@ function changeProfilePic(){
             contentType: false,
             processData: false,
             success:function(response){
+                console.log(response)
                 var image_url=response["image_url"]
                 $(".pprofile")[0].src=image_url;
             },

@@ -144,14 +144,20 @@ def save_contact_from_email(request):
 
 @csrf_exempt
 def change_dp(request):
+    print(1)
     kwargs = request.session['active_user']
     f = Fire(**kwargs)
+    print(2)
     im_b64=request.FILES.get('image')
     img = Image.open(io.BytesIO(im_b64.read()))
+    print(3)
     filepath=os.path.join(settings.STATIC_ROOT,"img/"+f.uid+".png")[1:]
     img.save(filepath)
+    print(4)
     img_url=f.storage.child("profile-pics/"+f.uid+".png").put(filepath)
     img_url = f.storage.child("profile-pics/"+f.uid+".png").get_url(img_url['downloadTokens'])
+    print(5)
     f.changeProfilePic(img_url)
     os.remove(filepath)
+    print(6)
     return JsonResponse({"image_url":img_url},safe=False)

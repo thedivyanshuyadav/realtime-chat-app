@@ -28,12 +28,13 @@ SECRET_KEY = 'django-insecure-e(0e-hm1@sd0bopg6*-)h0jwcjst(v2beypzr&i$fwz+onjuk_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*','chatting.azurewebsites.net']
+ALLOWED_HOSTS = ['chatting.azurewebsites.net']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -158,7 +159,7 @@ USE_TZ = True
 STATIC_ROOT=os.path.join(BASE_DIR,'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS=()
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
