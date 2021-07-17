@@ -116,7 +116,8 @@ function changeProfilePic(){
                 $(".pprofile")[0].src=image_url;
             },
             error: function(data){
-                console.log(data)
+                dta=data
+                console.log(data.responseText)
                 console.log("error profile pic not uploaded!");
             }
         }).done(()=>{

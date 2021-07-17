@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-e(0e-hm1@sd0bopg6*-)h0jwcjst(v2beypzr&i$fwz+onjuk_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['chatting.azurewebsites.net']
+ALLOWED_HOSTS = ['*','chatting.azurewebsites.net']
 
 
 # Application definition
@@ -68,7 +68,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 SITE_ID = 1
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_ON_GET=True
