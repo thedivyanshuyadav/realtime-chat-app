@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block js %}
+    <script>
+        var theme=localStorage.getItem("theme")
+        document.documentElement.setAttribute('data-theme', theme);
+
+        function loadMoreMsg(){
+            const oldH=$(".main").height()
+            $.post('/get_remained_msg/',(response)=>{
+                extra=response['extra']
+                allmsgrecieved=response['allmsgrecieved']
+
+                extra.forEach((msg)=>{
+                        html=``
+                       if(msg.sent_by==`{{ myUid }}`){
+                           html+=`<div class="row mymsg-row">`
+                       }else{
+                           html+=`<div class="row msg-row">
+                                    <div class="col-1 pp-div">
+                                        <img src="1" class="pp">
+                                    </div>`
+                       }
+                       html+=`<div class="message">
+                                ${msg.message}
+                              </div></div>`
+                       $(".main").prepend(html);
+                });
+                $(".more-msg").remove();
+                if(! allmsgrecieved) {
+                    load_more = `<div class="container-fluid more-msg"><button class="material-icons" onclick="loadMoreMsg()">refresh</button></div>`
+                    $(".main").prepend(load_more);
+                }
+            })
+            const newH=$(".main").height();
+            scrollHeight=newH-oldH;
+            $(".main").scrollTop(1);
+            console.log("->",oldH,newH,scrollHeight);
+        }
+        function saveContact(id){
+            $.post(`/add-contact/${id}/`,()=>{
+                var chatUrl=window.location.href.split("/").slice(0,-2).join("/");
+                window.location.href=chatUrl+"/1"
+            });
+        }
+    </script>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{% endblock %}
+{% block content %}
+<header>
+    <div class="container-fluid py-2 fixed-top header">
+        <div class="row">
+            <div class="col-2 py-1 pr-1 mr-1">
+                <div class="col-5 back material-icons" onclick="window.location='/home/'">chevron_left</div>
+                <div class="col-6 pp-div">
+                    <img class="pp" src="{{ c_pp }}">
+                </div>
+            </div>
+            <div class="col py-1 cname">{{ c_name }}</div>
+            {% ifequal friend 0 %}
+                <div class="col-1 py-1 material-icons options" onclick="saveContact({{ id }})">person_add</div>
+            {% endifequal %}
+{#            <div class="col-1 py-1 material-icons options">more_vert</div>#}
+        </div>
+    </div>
+</header>
+<main>
+    <div class="pt-5 container-fluid main">
+        {% if not request.session.allmsgrecieved %}
+            <div class="container-fluid more-msg"><button class="material-icons" onclick="loadMoreMsg()">refresh</button></div>
+        {% endif %}
+        {% for mess in allchats %}
+            {% ifequal mess.sent_by myUid %}
+                <div class="row mymsg-row">
+                <div class="message">
+                    {{ mess.message }}
+                </div>
+                </div>
+            {% else %}
+                <div class="row msg-row">
+                <div class="col-1 pp-div">
+                    <img src="{{ c_pp }}" class="pp">
+                </div>
+                <div class="message">
+                    {{ mess.message }}
+                </div>
+            </div>
+            {% endifequal %}
+        {% endfor %}
+    </div>
+</main>
+<footer>
+<div class="container-fluid py-2 fixed-bottom footer">
+    <form class="row footer-form px-2" action="send-message/" method="POST">
+        <span class="textarea" role="textbox" contenteditable></span>
+        <div class="send-btn-div">
+            <input type="submit" class=" material-icons" value="send">
+        </div>
+    </form>
+</div>
+</footer>
+    <script src="{% static 'js/chat.js' %}"></script>
+
+{% endblock %}
