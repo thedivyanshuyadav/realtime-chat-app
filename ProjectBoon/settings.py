@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e(0e-hm1@sd0bopg6*-)h0jwcjst(v2beypzr&i$fwz+onjuk_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['chatting.azurewebsites.net']
 
@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['chatting.azurewebsites.net']
 # Application definition
 
 INSTALLED_APPS = [
+'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,6 +84,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'ProjectBoon.urls'
@@ -154,8 +157,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT=os.path.join(BASE_DIR,'static').replace('\\','/')
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+STATICFILES_DIRS=()
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
