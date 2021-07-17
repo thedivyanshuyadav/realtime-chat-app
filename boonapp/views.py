@@ -148,7 +148,7 @@ def change_dp(request):
     f = Fire(**kwargs)
     im_b64=request.FILES.get('image')
     img = Image.open(io.BytesIO(im_b64.read()))
-    filepath=os.path.join(settings.STATIC_URL,"img/"+f.uid+".png")[1:]
+    filepath=os.path.join(settings.STATIC_ROOT,"img/"+f.uid+".png")[1:]
     img.save(filepath)
     img_url=f.storage.child("profile-pics/"+f.uid+".png").put(filepath)
     img_url = f.storage.child("profile-pics/"+f.uid+".png").get_url(img_url['downloadTokens'])
