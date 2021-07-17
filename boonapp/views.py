@@ -151,7 +151,7 @@ def change_dp(request):
     im_b64=request.FILES.get('image')
     img = Image.open(io.BytesIO(im_b64.read()))
     print(3,img)
-    filepath=os.path.join(settings.STATIC_URL,"img/"+f.uid+".png")[1:]
+    filepath=f.uid+".png"
     img.save(filepath)
     print(4)
     img_url=f.storage.child("profile-pics/"+f.uid+".png").put(filepath)
