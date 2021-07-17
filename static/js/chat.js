@@ -61,7 +61,7 @@ $(".footer-form").submit((ev)=>{
 
 function liveChatUpdate(){
     $.ajax({
-        type:"POST",
+        type:"GET",
         url:``,
         cache:false,
         data:{
@@ -71,9 +71,19 @@ function liveChatUpdate(){
             var body = `<main>`;
             var bodyEnd = "</main>";
             var res = s.substring(s.indexOf(body)+body.length,s.indexOf(bodyEnd));
+            var scrollT=$(".main").scrollTop()
+            var maxScrollT=$(".main").height() - 25
+            console.log(maxScrollT,scrollT);
+            prevHtml=$("main").html()
             $("main").html(res);
+            newHtml=$("main").html();
+
+            if(maxScrollT-scrollT<35.5 && prevHtml!==newHtml)
+                $(".main").scrollTop($(".main").height() + $(".main")[0].offsetHeight);
+            else
+                $(".main").scrollTop(scrollT);
         },
     });
 }
 // scrolling problem
-// setInterval(liveChatUpdate,1500);
+setInterval(liveChatUpdate,1500);

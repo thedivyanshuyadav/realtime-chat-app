@@ -1,1 +1,4 @@
 Django~=3.2.5
+pyrebase4
+django-allauth
+pillow
