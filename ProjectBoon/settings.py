@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e(0e-hm1@sd0bopg6*-)h0jwcjst(v2beypzr&i$fwz+onjuk_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['chatting.azurewebsites.net']
 
