@@ -3,3 +3,4 @@ pyrebase4
 django-allauth
 pillow
 whitenoise
+gunicorn
