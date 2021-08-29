@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}CHAT | CHAT{% endblock %}
+{% block css %}
+    <style>
+        :root{
+            --msg-box-shade:rgba(0,0,0,0.2);
+        }
+        [theme="dark"]{
+            --msg-box-shade:rgba(111,111,111,0.2);
+        }
+        body{font-size: 1.25em;}
+        #topbar{
+            z-index: 1;
+            background: var(--header-color);
+            color: var(--background-color);
+        }
+        body{background: var(--background-color);}
+        #bottombar{
+            z-index: 1;
+            background: var(--background-color);
+        }
+        #bottombar *{box-shadow: 0 -1px 20px 1px var(--msg-box-shade) ;}
+        #message{background: transparent;color:var(--text-color);}
+        #send{background: var(--shade-color);}
+        #message-pcontainer{
+            overflow-y: scroll;
+            z-index:0;
+            color: var(--text-color);
+        }
+        .user-message{
+            background: var(--object-color);
+            border-radius: 0 24px 24px 0;
+            word-break: break-all;
+            width: fit-content;
+            max-width: 70%;
+        }
+        .mymsg{
+            border-radius: 24px 0 0 24px !important;
+            color: var(--text-color) !important;
+            background: var(--shade-color) !important;
+        }
+        .user-message + .user-message{
+            margin-top: 8px;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+
+    <script>
+
+        ws.onopen = function(){
+            ws.send(JSON.stringify({
+                'command': 'join',
+                'userid':    {{ userid }},
+                'other_userid': {{ other_userid }},
+            }));
+        }
+
+        const sendForm = document.getElementById('send-form');
+        const messageBox = document.getElementById('message-field')
+
+        sendForm.onsubmit = function(e) {
+            e.preventDefault();
+            let msg = document.getElementById('message').value.trim();
+            if (msg) {
+                console.log(msg);
+                ws.send(JSON.stringify({
+                    'command': 'send',
+                    'message': msg,
+                    'userid':{{ userid }},
+                    'other_userid':{{ other_userid }}
+                }))
+                sendForm.reset();
+
+                $.ajax({
+                    type:'POST',
+                    url:'send/',
+                    data:{
+                        'message': msg,
+                        'userid':{{ userid }},
+                        'other_userid':{{ other_userid }}
+                    },
+                    headers:{'X-CSRFToken':`{{ csrf_token }}`},
+
+                })
+
+
+            }
+        }
+
+        ws.onmessage = function(e){
+            const data = JSON.parse(e.data);
+            const message = data['message'];
+            const userid = data['userid'];
+            uu = userid;
+            ut = {{ userid }};
+            if(userid == {{ userid }}){
+                content = `
+                    <div class="user-message mymsg py-2 px-3" style="margin-left: auto;">${message}</div>
+                `
+            }else{
+                content = `
+                    <div class="user-message py-2 px-3">${message}</div>
+                `
+            }
+            console.log(data);
+            messageBox.innerHTML += content;
+            document.getElementById("message-pcontainer").scrollTop = document.getElementById("message-pcontainer").scrollHeight
+
+        }
+
+
+    </script>
+
+    <script>
+            document.getElementById("message-pcontainer").scrollTop = document.getElementById("message-pcontainer").scrollHeight
+            $("html").attr("theme",localStorage.getItem("theme"));
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid fixed-top" id="topbar">
+        <div class="row">
+            <div class="col-2 p-2">
+                <div class="material-icons" onclick="window.location.href='/'"><h4>chevron_left</h4></div>
+            </div>
+            <div class="col-10 p-2"><h4>{{ username }}</h4></div>
+        </div>
+    </div>
+    <div class="container-fluid vh-100 py-5 fixed-top" id="message-pcontainer">
+        <div class="mt-3">
+                <div id="message-field" class="messages d-flex flex-column">
+                    {% if conversation %}
+                    {% for message in conversation %}
+                            {% ifequal message.sender userid %}
+                                        <div class="user-message mymsg py-2 px-3" style="margin-left: auto;">{{ message.content }}</div>
+                            {% else %}
+                                        <div class="user-message py-2 px-3">{{ message.content }}</div>
+                            {% endifequal %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+    <div class="container-fluid fixed-bottom d-flex flex-row justify-content-between m-0 p-1" id="bottombar">
+        <form id="send-form" class="flex-fill">
+              <div class="d-flex">
+                <input  id="message" type="text" class="form-control flex-fill" aria-describedby="emailHelp">
+                <button id="send" type="submit" class="btn">Send</button>
+              </div>
+          </form>
+    </div>
+{% endblock %}
+

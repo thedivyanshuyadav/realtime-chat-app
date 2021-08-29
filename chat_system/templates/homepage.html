@@ -1,0 +1,728 @@
+{% extends 'base.html' %}
+{% block title %} Home | Chat {% endblock %}
+{% block css %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+
+        :root{
+            --box-shade:rgba(0,0,0,0.2);
+        }
+        [theme="dark"]{
+            --box-shade:rgba(111,111,111,0.2);
+        }
+
+#header{
+    background: var(--header-color);
+    padding-bottom: 5em;
+    z-index: 1;
+    color: var(--background-color);
+}
+#header>div>div:nth-child(1){
+    display: flex;
+    align-items: center;
+}
+#header h1{font-family: 'Pacifico', cursive;}
+
+.search-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+.textinput, .textinput:enabled {
+    background: var(--background-color) !important;
+    color: var(--text-color) !important;
+    border: none;
+    font-size: 1.15em;
+}
+
+#footer{
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+    background: var(--bottombar-color);
+    height: 3.75em;
+}
+#footer>*,
+#footer>.row>*{
+    background: transparent;
+    font-size: 1.15em;
+    font-weight: 1000;
+}
+.bottom-icon:not(.active){
+    background: transparent !important;
+    color: transparent !important;
+    -webkit-text-stroke-width: 3.25px;
+    -webkit-text-stroke-color: var(--text-color);
+}
+.bottom-icon.active {
+    background: transparent;
+    color: var(--shade-color);
+    -webkit-text-stroke-width: 3.15px;
+    -webkit-text-stroke-color: #fd7f30 !important;
+}
+
+
+main{
+    height: 100vh;
+    overflow: hidden;
+    background: var(--background-color);
+}
+#carouselExampleSlidesOnly{
+    /*border: 5px solid green;*/
+    margin-top: 10.25em;
+    margin-bottom: 3.75em;
+    /*noinspection CssInvalidPropertyValue*/
+    height: -webkit-fill-available;
+    background: var(--background-color);
+    color:var(--text-color);
+    border-radius: 36px 36px 0 0;
+    z-index: 1;
+    overflow: scroll;
+}
+.slide-heading{
+    margin-inline: 24px;
+    margin-top:0.8em;
+    margin-bottom: 0.75em;
+}
+.slide-heading>*{
+    padding: 0;
+}
+.options{
+    text-align: end;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+}
+.tile{
+    background: var(--object-color);
+    /*border: 2px solid yellow;*/
+    border-radius: 5px;
+    margin-inline:1em;
+    margin-top: 0.17em;
+    margin-bottom: 0.17em;
+    padding: 0.5em;
+    transition: left 500ms ease-in;
+}
+.tile>img{
+    padding: 0.85em;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.tile>span>div:nth-child(2)>div{
+    font-size: 0.72em;
+    color: var(--secondary-text-color);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.tile>span>div:nth-child(2)>.material-icons{
+    display: flex;
+    align-items: center;
+    font-size: 0.6em;
+    color: var(--shade-color);
+}
+
+.contact-row{
+    margin-inline: 0.75em;
+    height: 35%;
+}
+.contact-row>.tile{
+    margin-inline: 0.25em;
+    padding: 0;
+    flex: 1 !important;
+    max-width: 50% !important;
+}
+.inb_pp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*border: 1px red solid;*/
+    border-radius: 50%;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 0 5px var(--secondary-text-color);
+}
+.inb_pp>img{
+    width: inherit;
+    height: inherit;
+}
+.contact-row>.tile>img{
+    margin:0 ;
+    padding: 0;
+    height: 75%;
+    border-radius: 0;
+    width: inherit;
+}
+.contact-col-name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25%;
+}
+
+
+.settings-carousel>.slide-heading{
+    visibility: hidden;
+}
+.profile-pic{
+    /*border:1px solid green;*/
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    margin-inline:auto;
+        display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pprofile{
+    object-fit: cover;
+    width: inherit !important;
+    height: inherit !important;
+    border-radius: 50% !important;
+    outline: none;
+    border: none;
+}
+
+
+  .tgl {
+    display: none;
+  }
+  .tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
+    box-sizing: border-box;
+  }
+  .tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl + .tgl-btn::-moz-selection {
+    background: none;
+  }
+  .tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
+    background: none;
+  }
+  .tgl + .tgl-btn {
+    outline: 0;
+    display: block;
+    width: 47px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+  }
+  .tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
+    position: relative;
+    display: flex;
+    content: "";
+    width: 50%;
+    height: 100%;
+  }
+  .tgl + .tgl-btn:after {
+    left: 0;
+  }
+  .tgl + .tgl-btn:before {
+    display: none;
+  }
+  .tgl:checked + .tgl-btn:after {
+    left: 50%;
+  }
+
+  .tgl-light + .tgl-btn {
+    background: var(--secondary-background-color);
+    border-radius: 2em;
+    padding: 1px;
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+  }
+  .tgl-light + .tgl-btn:after {
+    border-radius: 50%;
+    background: #fff;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+  .tgl-light:checked + .tgl-btn {
+    background: transparent;
+    border: 2px solid var(--secondary-text-color);
+  }
+  .tgl-light:checked + .tgl-btn:after{
+      background: var(--shade-color);
+  }
+
+.sign-out-btn{
+    border: none;
+    justify-content: center;
+    align-items: center;
+    background: var(--shade-color);
+    color: #F5F5F5FF;
+    display: flex;
+    margin: auto;
+    height: 1.5em;
+    border-radius: 24px;
+}
+.sign-out-btn:link,.sign-out-btn:visited{
+    text-decoration: none;
+    color:#F5F5F5FF;
+}
+
+.dp{object-fit: cover;border-radius: 50%;}
+.msg-dp{height: 150px;width: 150px}
+.add-person-div.closed{height:0;opacity:0;}
+#pp-form{visibility: hidden;}
+.fav{  font-weight: bold;box-shadow: 0 0 30px 4px whitesmoke;}
+#create-story{ box-shadow:none;border: 4px solid var(--secondary-background-color);justify-content: center; align-items: center;}
+#story-point-div{align-items: center;}
+#cf_add{background: var(--shade-color);color:var(--text-color);border: none;border-radius: 12px;}
+#cf_email{background: var(--object-color);color:var(--text-color);border: none;}
+input{outline:none;}
+#c-div-container{flex-wrap: wrap;}
+.c-div{
+    flex:47.5%;
+    max-width: 47.5%;
+    background: var(--object-color);
+    height: 570px;
+    box-shadow: 0 0 10px 0 var(--box-shade);
+}
+#messagebox_list > li{background: var(--object-color);color:var(--text-color);}
+#story-point-div{visibility: hidden;background: rgba(10,10,10,0.9);z-index: 2;}
+#change-story,.profile-name{font-size: 1.85em!important;}
+#change-story{visibility: hidden;}
+#self-story-title{font-size: 0.85em;}
+
+
+@media (min-width: 640px) {
+    .contact-row>.tile {
+        max-width: 20% !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $("html").attr("theme",localStorage.getItem("theme"));
+
+        function toggle_active(element){
+            if(!element.classList.contains("active")){
+                $(".bottom-icon.active")[0].classList.remove("active");
+                element.classList.add("active");
+
+                var $screen=$(".carousel-item")[element.dataset.slideTo];
+                $(".carousel-item.active")[0].classList.remove("active");
+                $screen.classList.add("active");
+
+            }
+        }
+
+        function openChat(id){
+            $.ajax({
+                url:'/chat/',
+                type:'POST',
+                data:{
+                    'other_userid':id,
+                },
+                headers:{'X-CSRFToken':`{{ csrf_token }}`},
+                success:(response)=>{
+                        console.log(response);
+                        window.location.href = '/chat/';
+                }
+            })
+        }
+
+
+        function expandAddForm(){
+                const email_field = document.getElementById('cf_email');
+                email_field.style = "border:none";
+                $(".add-person-div")[0].classList.toggle("closed")
+                $(".add-person-div>input")[0].classList.toggle("closed")
+                $(".add-person-div>button")[0].classList.toggle("closed")
+
+        }
+
+        function switchTheme(e) {
+            ev = e;
+            let htmlTag = document.children[0];
+            let curr_theme = htmlTag.getAttribute("theme")
+            curr_theme = curr_theme==="dark"?null:"dark";
+            htmlTag.setAttribute("theme",curr_theme)
+            localStorage.setItem('theme', curr_theme);
+        }
+
+        function changeProfilePic(){
+            let choose = document.getElementById('pp-inp')
+            choose.click();
+        }
+
+
+
+        const create_story = document.getElementById('create-story');
+        const story_inp = document.getElementById('story-inp');
+        const browse_story = document.getElementById('change-story');
+        if(browse_story) {
+            browse_story.onclick = function () {
+                story_inp.click();
+            }
+        }
+
+        story_inp.onchange = function(){
+            const file = story_inp.files[0];
+            create_story.classList.toggle('material-icons');
+            {#create_story.id = "";#}
+            const story_form = document.getElementById('story-form');
+            $.ajax({
+                url: "/create-story/",
+                type: "POST",
+                dataType: "JSON",
+                data: new FormData(story_form),
+                headers:{'X-CSRFToken':`{{ csrf_token }}`},
+                processData: false,
+                contentType: false,
+                success: function (xhr)
+                {
+                    console.log('success',xhr);
+                },
+                complete: function(xhr){
+                    let story_name = xhr.responseText;
+                    console.log(story_name);
+                    const content = `
+                            <img src="{{ MEDIA_URL }}${story_name}" class="fav dp msg-dp">
+                    `
+                    create_story.innerHTML = content;
+                },
+            });
+        }
+
+        const Timer = function(callback, delay) {
+            let timerId, start, remaining = delay;
+
+            this.pause = function() {
+                window.clearTimeout(timerId);
+                remaining -= Date.now() - start;
+            };
+
+            this.resume = function() {
+                start = Date.now();
+                window.clearTimeout(timerId);
+                timerId = window.setTimeout(callback, remaining);
+            };
+
+            this.resume();
+        };
+
+        const story_point_div = document.getElementById('story-point-div');
+        console.log(story_point_div.style)
+        $(".story-div").on('click', function(e){
+            if(this.id==="create-story"){
+                browse_story.style = "visibility:inherit;"
+            } else {
+                browse_story.style = "visibility:hidden;"
+            }
+            let story_img = e.target;
+            let story_point_img = document.getElementById('story_pointer');
+            if (!story_img.src){
+                story_point_img.style = "visibility:hidden;"
+                story_inp.click();
+            } else{
+                story_point_img.style = "visibility:inherit;object-fit: scale-down;height:fit-content;"
+            }
+            story_point_img.src = story_img.src;
+            story_point_div.style = "visibility:visible;"
+            timer = new Timer(()=> {
+                story_point_div.style = "visibility:hidden;"
+            },4000);
+        });
+
+
+        story_point_div.onclick = function(e){
+            let story_point_img = document.getElementById('story_pointer');
+            if (e.target!=story_point_img && e.target !=story_inp)
+            story_point_div.style = "visibility:hidden;"
+        }
+
+
+
+
+    </script>
+
+    <script>
+
+        wsh.onopen = function(){
+            wsh.send(JSON.stringify({
+                'command': 'join',
+               'userid':    {{ userid }},
+            }));
+        }
+
+        function addContact(){
+            const other_user_email = document.getElementById('cf_email');
+
+            if (other_user_email){
+                wsh.send(JSON.stringify({
+                    'command': 'add-contact',
+                    'userid': {{ userid }},
+                    'other_user_email': other_user_email.value,
+                }))
+                other_user_email.value = ""
+            }
+        }
+
+        document.getElementById("pp-inp").onchange = function(e){
+            const pp_form = document.getElementById('pp-form');
+            const image = document.getElementById("profile_pic_id");
+
+            $.ajax({
+                url: "/change_profile_pic/",
+                type: "POST",
+                dataType: "JSON",
+                data: new FormData(pp_form),
+                headers:{'X-CSRFToken':`{{ csrf_token }}`},
+                processData: false,
+                contentType: false,
+                success: function (xhr)
+                {
+                    let image = document.getElementById("profile_pic_id");
+                    let dp_path = xhr.responseText;
+                    image.src = {{ MEDIA_URL }} + dp_path;
+                },
+                complete: function(xhr){
+                    let dp_path = xhr.responseText;
+                    if(dp_path) {
+                        image.src = {{ MEDIA_URL }} +dp_path;
+                        console.log({{ userid }})
+                        wsh.send(JSON.stringify({
+                            'command': 'refresh_dp',
+                            'userid':{{ userid }},
+                            'dp_path': dp_path,
+                        }));
+                    }
+
+                },
+            });
+
+        }
+
+        wsh.onmessage = (e)=>{
+            const data = JSON.parse(e.data);
+            console.log(data)
+            if(data.contact_added){
+                const c_div_container = document.getElementById('c-div-container');
+                const other_userid = data.c_id;
+                const other_profile_pic = data.c_profile_pic;
+                const other_username = data.c_username;
+                if (other_userid!={{ userid }}) {
+                    let content = `
+                        <div id="${other_userid}" class="c-div m-1 p-2" onclick="openChat(${other_userid})">
+                                <div class="container-fluid text-center p-2 h-75">
+                                    <img class="dp w-100 h-100" src="{{ MEDIA_URL }}${other_profile_pic}" />
+                                </div>
+                                <div class="d-flex flex-fill text-center p-2 h-25 justify-content-center align-items-center">
+                                    ${other_username}
+                                </div>
+                            </div>
+                    `
+                    c_div_container.innerHTML = content + c_div_container.innerHTML ;
+                    expandAddForm();
+                }
+            } else if (data.wrong_useremail){
+                const email_field = document.getElementById('cf_email');
+                email_field.style = "border: 1px solid red";
+            } else if (data.new_message){
+                    console.log(data)
+                    const already = data['already'];
+                    const last_message = data['message'];
+                    const other_userid = data['other_userid'];
+                    const other_username = data['other_username'];
+                    const other_profile_pic = data['other_profile_pic']
+                    if(already){
+                        let target_div = document.getElementById(other_userid).children.item(1).children.item(1);
+                        target_div.innerText = last_message;
+                    }else {
+                        console.log('add needed')
+                        let message_box = document.getElementById("messagebox_list")
+                        let content = `
+                            <li id="${ other_userid }" class="list-group-item d-flex flex-row" onclick="openChat(${other_userid})">
+                                <div class="col-2 text-center">
+                                    <img  class="dp" src="{{ MEDIA_URL }}${other_profile_pic}"/>
+                                </div>
+                                <div class="col-10 px-3 d-flex flex-column">
+                                    <div class="col-12 flex-fill">${other_username}</div>
+                                    <div class="col-12 flex-fill">${last_message}</div>
+                                </div>
+                            </li>
+                        `
+                        message_box.innerHTML = content + message_box.innerHTML
+                    }
+            } else if (data.refresh_dp){
+                let contact_id = data['contact_id'];
+                let dp_path = data['dp_path'];
+                let contact_dp = $("#"+contact_id+" img")[0];
+                let c_div_contact_dp = $("#contact-"+contact_id+"  img")[0];
+                console.log(contact_id)
+                contact_dp.src = {{ MEDIA_URL }}+dp_path;
+                if(c_div_contact_dp)
+                    c_div_contact_dp.src = {{ MEDIA_URL }} + dp_path;
+                console.log('[REFRESH DP]',data);
+            }  else if(data.refresh_story){
+                let contact_id = data['contact_id'];
+                let story_path = data['story_path'];
+                let story_ = $("#story-"+contact_id)[0];
+                console.log(story_)
+                if(story_)
+                    story_.src = {{ MEDIA_URL }} + story_path;
+
+            }
+        }
+
+
+    </script>
+{% endblock %}
+
+{% block body %}
+
+<header>
+    <div id="header" class="container-fluid py-3 fixed-top">
+        <div class="col-12 align-items-center">
+            <div class="row mt-2">
+                <h1 class="m-0">Namaste</h1>
+            </div>
+            <div class="my-3 mx-1 d-flex flex-row">
+                <div class="self-story-div mx-2 my-1">
+
+                    {% if story_name %}
+                    <div id="create-story"  class="d-flex story-div fav dp msg-dp material-icons" >
+                        <img src="{{ MEDIA_URL }}{{ story_name }}" class="fav story-img dp msg-dp" >
+                    </div>
+                    {% else %}
+                    <div id="create-story" class="d-flex story-div fav dp msg-dp material-icons" >
+                        add
+                    </div>
+                    {% endif %}
+                <div id="self-story-title" class="w-100 text-center fw-bold">Story</div>
+                </div>
+                {% for sto in story %}
+                    <div id="story-div-{{ sto.user.id }}" class="story-div mx-2 my-1">
+                        <img id="story-{{ sto.user.id }}" src="{{ MEDIA_URL }}{{ sto.story }}" class="fav story-img dp msg-dp"/>
+                    </div>
+                {% endfor %}
+            </div>
+            <form id="story-form" action="/change_profile_pic/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" id="story-inp" name="story-inp" accept="image/*"/>
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div id="story-point-div" class="position-absolute vh-100 vw-100 text-center d-flex" style="background:rgba(10,10,10,0.9);z-index: 2;" ontouchstart="console.log('start')" ontouchend="console.log('end')"  ontouchcancel="console.log('cancel')"  onmousedown="timer.pause()" onmouseup="timer.resume()">
+        <span id="change-story" class="position-absolute top-0 end-0 me-3 mt-3 material-icons text-white ">upload_file</span>
+        <img id="story_pointer" class="align-middle w-100" src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwZm9vZCUyMHN0b3JlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" style="object-fit: scale-down;"/>
+    </div>
+<main>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="0">
+  <div class="carousel-inner">
+    <div id="requests"class="carousel-item">
+        <h5 class="slide-heading">Requests</h5>
+
+    </div>
+    <div id="inbox" class="carousel-item active">
+        <h5 class="slide-heading">Messages</h5>
+        <div class="container-fluid">
+            <ul id="messagebox_list" class="list-group">
+                {% if receivers %}
+                    {% for rec in receivers %}
+                        {% ifequal rec.sender.username username %}
+                            <li id="{{ rec.receiver.id }}" class="list-group-item d-flex flex-row" onclick="openChat(this.id)">
+                                <div class="col-2 text-center">
+                                    <img  class="dp msg-dp" src="{{ MEDIA_URL }}{{ rec.receiver.profile_pic }}"/>
+                                </div>
+                                <div class="col-10 px-3 d-flex flex-column">
+                                    <div class="col-12 flex-fill">{{ rec.receiver }}</div>
+                                    <div class="col-12 flex-fill">{{ rec.content }}</div>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li id="{{ rec.sender.id }}" class="list-group-item d-flex flex-row" onclick="openChat(this.id)">
+                                <div class="col-2 text-center">
+                                    <img  class="dp msg-dp"  src="{{ MEDIA_URL }}{{ rec.sender.profile_pic }}"/>
+                                </div>
+                                <div class="col-10 px-3 d-flex flex-column">
+                                    <div class="col-12 flex-fill">{{ rec.sender }}</div>
+                                    <div class="col-12 flex-fill">{{ rec.content }}</div>
+                                </div>
+                            </li>
+                        {% endifequal %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div id="contacts" class="carousel-item ">
+        <div class="slide-heading row">
+            <h5 class="col">Contacts</h5>
+            <span class="col-2 options material-icons" onclick="expandAddForm()">person_add</span>
+        </div>
+        <div class="container-fluid text-center d-flex add-person-div closed">
+            <input id="cf_email" class="col-8 px-2 py-1 flex-fill closed" type="email" value="" placeholder="Email Address">
+            <button id="cf_add" class="col-2 px-1 py-1 ms-1 flex-fill closed" onclick="addContact()">Add</button>
+        </div>
+        <div id="c-div-container" class="container-fluid d-flex">
+            {% if contacts %}
+                {% for cont in contacts %}
+                    <div class="c-div m-1 p-2" id="contact-{{ cont.contact.id }}" onclick="openChat({{ cont.contact.id }})">
+                        <div class="container-fluid text-center p-2 h-75">
+                            <img class="dp w-100 h-100" src="{{ MEDIA_URL }}{{ cont.contact.profile_pic }}" />
+                        </div>
+                        <div class="d-flex flex-fill text-center p-2 h-25 justify-content-center align-items-center">
+                            {{ cont.contact.username }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="carousel-item settings-carousel">
+        <h5 class="slide-heading">Settings</h5>
+        <div class="col text-center">
+            <div class="profile-pic dp" onclick="changeProfilePic()"><img id="profile_pic_id" class="pprofile" src={{ MEDIA_URL }}{{ profile_pic }}></div>
+            <form id="pp-form" action="/change_profile_pic/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" id="pp-inp" name="pp-inp" accept="image/*"/>
+            </form>
+
+            <div class="profile-name mt-1">{{ username }}</div>
+            <div class="settings mt-1">Email: {{ email }}</div>
+            <div class="settings mt-3">
+                <div class="tgl-group col-8 text-center" style="display:flex;margin:auto;">
+                                <span style="margin:auto;">Dark Mode</span>
+                                <input class='tgl tgl-light' id='display-address' type='checkbox' style="margin:auto;">
+                                <label class='tgl-btn' for='display-address' style="margin:auto;" onclick="switchTheme(event)"></label>
+                </div>
+            </div>
+
+            <a class="col-3 settings mt-3 mb-2 px-3 py-3 sign-out-btn" href="/logout/">Signout</a>
+
+        </div>
+
+    </div>
+  </div>
+</div>
+</main>
+<footer>
+    <div id="footer" class="container-fluid py-3 fixed-bottom">
+        <div class="row text-center">
+{#            <div class="col-3">#}
+{#                <a href="#"><i class="material-icons bottom-icon"  onclick="toggle_active(this)" data-target=".carousel" data-slide-to="0">notifications</i></a>#}
+{#            </div>#}
+            <div class="col-4">
+                <a href="#"><i class="material-icons bottom-icon"  onclick="toggle_active(this)" data-target=".carousel" data-slide-to="2">people</i></a>
+            </div>
+            <div class="col-4">
+                <a href="#" id="msg-a"><i class="material-icons active bottom-icon"  onclick="toggle_active(this)" data-target=".carousel" data-slide-to="1">chat_bubble</i></a>
+            </div>
+            <div class="col-4">
+                <a href="#"><i class="material-icons bottom-icon"  onclick="toggle_active(this)" data-target=".carousel" data-slide-to="3" >settings</i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

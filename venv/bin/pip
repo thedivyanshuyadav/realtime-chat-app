@@ -1,4 +1,4 @@
-#!/home/programmingwith/Desktop/[PROJECT-CHAT]/venv/bin/python
+#!/home/programmingwith/CHAT/realtime_chat/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

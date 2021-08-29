@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" theme="dark">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        :root {
+            --background-color: #fff;
+            --text-color: #000;
+            font-size: 2em;
+        }
+        html {
+            --background-color: #fbfbfb !important;
+            --text-color: #252525 !important;
+            --header-color:linear-gradient(135deg,rgb(255, 40, 0),rgb(233, 76, 14),rgb(255, 126, 0),rgb(255, 145, 0)) !important;
+            --object-color:#ececec !important;
+            --bottombar-color:#e9e9e9 !important;
+            --shade-color:#fd7f30 !important;
+            --secondary-background-color:#c7c7c7 !important;
+            --secondary-text-color:#2d2d2d !important;
+            --message-textarea: #f3f3f3 !important;
+            --signout-bg:#f5e9bb;
+            --signout-color:#252525;
+        }
+
+        [theme="dark"]{
+            --background-color: #252525 !important;
+            --text-color: #f5f5f5 !important;
+            --header-color: linear-gradient(135deg, rgba(247, 40, 0, 1), rgba(245, 69, 0, 1), rgba(243, 118, 0, 1), rgba(255, 139, 0,1)) !important;
+            --object-color: #2d2d2d !important;
+            --bottombar-color: #2d2d2d !important;
+            --shade-color: #fd7f30 !important;
+            --secondary-background-color: #2d2d2d !important;
+            --secondary-text-color: #c7c7c7 !important;
+            --message-textarea: #393939 !important;
+            --signout-bg: #f5e9bb;
+            --signout-color: #252525;
+        }
+        ::-webkit-scrollbar {
+            width: 0;  /* Remove scrollbar space */
+            background: transparent;  /* Optional: just make scrollbar invisible */
+        }
+        /* Optional: show position indicator in red */
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
+
+        .material-icons{
+            font-size: 0.95em !important;
+        }
+
+
+    </style>
+    {% block css %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+    <script>
+
+        const wsh = new WebSocket('ws://127.0.0.1:8000/home/');
+        const ws = new WebSocket('ws://127.0.0.1:8000/chat/');
+
+    </script>
+
+</head>
+<body>
+{% block body %}
+{% endblock %}
+</body>
+{% block script %}{% endblock %}
+</html>

@@ -1,4 +1,4 @@
-#!/home/programmingwith/Desktop/[PROJECT-CHAT]/venv/bin/python
+#!/home/programmingwith/CHAT/realtime_chat/venv/bin/python
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
