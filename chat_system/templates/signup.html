@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
 {% block title %} Signup | Chat {% endblock %}
 {% block css %}
-
+<style>
+#parent-div{background: var(--header-color);}
+#login-form{background: white; border-radius: 20px;padding: 4em;}
+#app-name{font-family: 'Pacifico', cursive;color: white}
+</style>
 {% endblock %}
 
 {% block script %}
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <form action="/signup/" method="post">{% csrf_token %}
+    <div id="parent-div" class="vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="mb-2">
+        <h1 id="app-name">Namaste !!</h1>
+    </div>
+        <form id="login-form" class="my-5" action="/signup/" method="post">{% csrf_token %}
           <div class="mb-3">
             <label for="Text" class="form-label">Username</label>
             <input type="text" name="username" class="form-control" id="text" aria-describedby="">
@@ -30,7 +37,12 @@
                 {% endfor %}
             </ul>
             {% endif %}
-          <button type="submit" class="btn btn-primary">Submit</button>
+
+          <div class="d-flex flex-column">
+              <button type="submit" class="btn btn-primary">Signup</button>
+              <div class="flex-fill text-center mt-2"><span> Already have account ?  </span>
+              <a type="button" href="/login" class="btn btn-outline-primary ms-1">Login</a></div>
+          </div>
         </form>
     </div>
 {% endblock %}

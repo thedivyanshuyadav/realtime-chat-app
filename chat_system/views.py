@@ -43,7 +43,8 @@ def signup_page(request):
         if not cret:
             messages.add_message(request,messages.ERROR,"Please enter valid information!!")
         else:
-            return redirect('/login/')
+            request.session['id'] = user.id
+            return redirect('/')
     return render(request,signuppage,{"HOST":HOST})
 
 def login_page(request):
@@ -60,10 +61,10 @@ def login_page(request):
         else:
             messages.add_message(request,messages.ERROR,"Please enter valid information!!")
     return render(request,loginpage,{"HOST":HOST})
+
 def logout_page(request):
     del request.session['id']
-    return render(request,logoutpage,{"HOST":HOST})
-
+    return render(request,loginpage,{"HOST":HOST})
 
 def home_page(request):
     if 'id' not in request.session: return redirect('/login/')

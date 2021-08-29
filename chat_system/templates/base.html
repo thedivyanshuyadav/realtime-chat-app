@@ -53,12 +53,16 @@
 
 
     </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     {% block css %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
     <script>
 
-        const wsh = new WebSocket('ws://{{HOST}}/home/');
-        const ws = new WebSocket('ws://{{HOST}}/chat/');
+        const wsh = new WebSocket('wss://{{HOST}}/home/');
+        const ws = new WebSocket('wss://{{HOST}}/chat/');
 
     </script>
 
