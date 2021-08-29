@@ -2,13 +2,13 @@ import json
 
 from django.shortcuts import redirect,render, HttpResponse
 from chat_system.models import *
-from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from datetime import datetime
-
+from django.conf  import settings
 from .forms import *
 # Create your views here.
 
+HOST =settings.HOST
 
 chatpage = "chat.html"
 homepage = "homepage.html"
@@ -44,7 +44,7 @@ def signup_page(request):
             messages.add_message(request,messages.ERROR,"Please enter valid information!!")
         else:
             return redirect('/login/')
-    return render(request,signuppage,{})
+    return render(request,signuppage,{"HOST":HOST})
 
 def login_page(request):
     if request.method == "POST":
@@ -59,15 +59,16 @@ def login_page(request):
             return redirect('/')
         else:
             messages.add_message(request,messages.ERROR,"Please enter valid information!!")
-    return render(request,loginpage,{})
+    return render(request,loginpage,{"HOST":HOST})
 def logout_page(request):
     del request.session['id']
-    return render(request,logoutpage,{})
+    return render(request,logoutpage,{"HOST":HOST})
 
 
 def home_page(request):
     if 'id' not in request.session: return redirect('/login/')
     context = dict()
+    context['HOST']=HOST
     userid = context["userid"] = request.session['id']
     user = getuser(userid)
     context['username'] = user.username
@@ -123,6 +124,7 @@ def save_message(userid:int,other_userid:int,message:str):
 def chat_page(request):
     global my_userid
     context = dict()
+    context["HOST"] = HOST
     my_userid=context["userid"] = request.session['id']
     if request.method == "POST":
         request.session['other_userid'] = request.POST["other_userid"]

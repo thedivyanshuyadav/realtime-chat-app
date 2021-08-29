@@ -57,8 +57,8 @@
     <title>{% block title %}{% endblock %}</title>
     <script>
 
-        const wsh = new WebSocket('ws://127.0.0.1:8000/home/');
-        const ws = new WebSocket('ws://127.0.0.1:8000/chat/');
+        const wsh = new WebSocket('wss://{{HOST}}/home/');
+        const ws = new WebSocket('wss://{{HOST}}/chat/');
 
     </script>
 
