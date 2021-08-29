@@ -34,12 +34,16 @@ def signup_page(request):
         email = post_data['email']
         username = post_data['username']
         password = post_data['password']
-        user, cret = User.objects.get_or_create(
-            email=email,
-            password=password,
-            username =username,
-        )
-        print(user,cret)
+        try:
+            user, cret = User.objects.get_or_create(
+                email=email,
+                password=password,
+                username =username,
+            )
+            print(user,cret)
+        except:
+            cret = False
+            messages.add_message(request,messages.ERROR,"Already have account!! Please Login ")
         if not cret:
             messages.add_message(request,messages.ERROR,"Please enter valid information!!")
         else:
