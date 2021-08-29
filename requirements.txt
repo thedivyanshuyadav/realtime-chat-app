@@ -2,3 +2,4 @@ django
 channels
 channels_redis
 Pillow
+sorl-thumbnail

@@ -1,4 +1,5 @@
 from django.db import models
+from sorl.thumbnail import ImageField, get_thumbnail
 # Create your models here.
 
 def upload_directory(instance,filename):
@@ -14,6 +15,11 @@ class User(models.Model):
         verbose_name_plural = "User"
 
     def __str__(self): return self.username
+
+    def save(self, *args, **kwargs):
+        if self.profile_pic:
+            self.profile_pic = get_thumbnail(self.profile_pic, '100x100', quality=75, format='JPEG')
+        super(User, self).save(*args, **kwargs)
 
 
 class Message(models.Model):
@@ -45,5 +51,10 @@ class Story(models.Model):
     story = models.ImageField(upload_to=story_upload_directory)
     datetime = models.DateTimeField()
 
-    def __str__(self):
-        return self.user.username
+    def __str__(self): return self.user.username
+
+
+    def save(self, *args, **kwargs):
+        if self.story:
+            self.story = get_thumbnail(self.story, '150x150', quality=75, format='JPEG')
+        super(Story, self).save(*args, **kwargs)

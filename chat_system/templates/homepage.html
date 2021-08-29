@@ -168,8 +168,8 @@ main{
 }
 .profile-pic{
     /*border:1px solid green;*/
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
     margin-inline:auto;
         display: flex;
@@ -266,7 +266,7 @@ main{
 }
 
 .dp{object-fit: cover;border-radius: 50%;}
-.msg-dp{height: 150px;width: 150px}
+.msg-dp{height: 70px;width: 70px}
 .add-person-div.closed{height:0;opacity:0;}
 #pp-form{visibility: hidden;}
 .fav{  font-weight: bold;box-shadow: 0 0 30px 4px whitesmoke;}
@@ -285,7 +285,7 @@ input{outline:none;}
 }
 #messagebox_list > li{background: var(--object-color);color:var(--text-color);}
 #story-point-div{visibility: hidden;background: rgba(10,10,10,0.9);z-index: 2;}
-#change-story,.profile-name{font-size: 1.85em!important;}
+#change-story,.profile-name{font-size: 1.2em!important;}
 #change-story{visibility: hidden;}
 #self-story-title{font-size: 0.85em;}
 
@@ -613,7 +613,7 @@ input{outline:none;}
     </div>
 </header>
 
-    <div id="story-point-div" class="position-absolute vh-100 vw-100 text-center d-flex" style="background:rgba(10,10,10,0.9);z-index: 2;" ontouchstart="console.log('start')" ontouchend="console.log('end')"  ontouchcancel="console.log('cancel')"  onmousedown="timer.pause()" onmouseup="timer.resume()">
+    <div id="story-point-div" class="position-absolute vh-100 vw-100 text-center d-flex" style="background:rgba(10,10,10,0.9);z-index: 2;" ontouchstart="timer.pause()" ontouchend="timer.resume()"  ontouchcancel="timer.resume()"  onmousedown="timer.pause()" onmouseup="timer.resume()">
         <span id="change-story" class="position-absolute top-0 end-0 me-3 mt-3 material-icons text-white ">upload_file</span>
         <img id="story_pointer" class="align-middle w-100" src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwZm9vZCUyMHN0b3JlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" style="object-fit: scale-down;"/>
     </div>
