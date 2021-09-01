@@ -2,7 +2,7 @@
 Summary: A Realtime messaging app built using socket programming has functionalities like realtime messaging, realtime profile updation, media stories, contacts management as well as dark mode theme feature.
 
 For more information check 
- [ demo video ](https://doc-0g-50-docs.googleusercontent.com/docs/securesc/a71rap334l2km675krcqspjpkjafno8f/g4a71jhguf51umjhrnh85h4me651j2i5/1630438425000/01800343569898017954/01800343569898017954/1DLGNpsrI7BWkYAXdlfI1bTzujh6a7EyE?e=view&authuser=0) .
+ [ demo video ](https://drive.google.com/file/d/1DLGNpsrI7BWkYAXdlfI1bTzujh6a7EyE/view?usp=sharing) .
 
 
 ## Screenshots
